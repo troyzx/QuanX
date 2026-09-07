@@ -1,0 +1,9 @@
+# Local-only Shadowrocket/Tailscale secrets
+private/
+*.p12
+*.pfx
+*.mobileconfig
+authkey*
+tailscale-auth*
+subscription*
+nodes-private*
