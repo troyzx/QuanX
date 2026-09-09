@@ -17,7 +17,8 @@ function parseBody() {
 }
 
 try {
-  let result;
+  let result = null;
+  let passthrough = false;
 
   if (url.includes("/activity")) {
     result = url.includes("type_id=A03")
@@ -27,13 +28,17 @@ try {
     result = { data: [] };
   } else if (url.includes("operation/feeds")) {
     const body = parseBody();
-    if (!body) $done({});
-    if (Array.isArray(body.data)) {
-      body.data = body.data.filter(
-        (item) => typeof item?.category_times_text === "string" && item.category_times_text.includes("人查看")
-      );
+    if (!body) {
+      passthrough = true;
+    } else {
+      if (Array.isArray(body.data)) {
+        body.data = body.data.filter((item) => {
+          const text = item && item.category_times_text;
+          return typeof text === "string" && text.includes("人查看");
+        });
+      }
+      result = body;
     }
-    result = body;
   } else if (url.includes("operation/banners")) {
     result = {
       data: [
@@ -47,11 +52,17 @@ try {
     };
   } else if (url.includes("operation/features")) {
     const body = parseBody();
-    if (!body) $done({});
-    if (Array.isArray(body.data)) {
-      body.data = body.data.filter((item) => typeof item?.url === "string" && item.url.includes("cy://"));
+    if (!body) {
+      passthrough = true;
+    } else {
+      if (Array.isArray(body.data)) {
+        body.data = body.data.filter((item) => {
+          const targetUrl = item && item.url;
+          return typeof targetUrl === "string" && targetUrl.includes("cy://");
+        });
+      }
+      result = body;
     }
-    result = body;
   } else if (url.includes("/campaigns")) {
     result = {
       campaigns: [
@@ -68,10 +79,14 @@ try {
   } else if (url.includes("config/cypage")) {
     result = { popups: [], actions: [] };
   } else {
-    $done({});
+    passthrough = true;
   }
 
-  $done({ body: JSON.stringify(result) });
+  if (passthrough || result === null) {
+    $done({});
+  } else {
+    $done({ body: JSON.stringify(result) });
+  }
 } catch (error) {
   console.log(`[CaiYunAds] unexpected error: ${error}`);
   $done({});
