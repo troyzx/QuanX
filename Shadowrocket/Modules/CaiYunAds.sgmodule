@@ -9,6 +9,8 @@
 
 [Script]
 CaiYunAds = type=http-response,pattern=^https?://(wrapper\.cyapi\.cn/v\d/activity|api\.caiyunapp\.com/v\d/activity|starplucker\.cyapi\.cn/v\d/(operation/(homefeatures|feeds|banners|features)|campaigns|notification/message_center|config/cypage)),requires-body=1,max-size=-1,script-path=https://raw.githubusercontent.com/troyzx/QuanX/master/Shadowrocket/Scripts/caiyun_ads.js
+CaiYunVip = type=http-response,pattern=^https?://biz\.cyapi\.cn/(api/v\d/user_detail|v\d/user),requires-body=1,max-size=-1,script-path=https://raw.githubusercontent.com/troyzx/QuanX/master/Shadowrocket/Scripts/caiyun_ads.js
+
 
 [MITM]
-hostname = %APPEND% wrapper.cyapi.cn, api.caiyunapp.com, starplucker.cyapi.cn, ad.cyapi.cn
+hostname = %APPEND% wrapper.cyapi.cn, api.caiyunapp.com, starplucker.cyapi.cn, ad.cyapi.cn, biz.cyapi.cn
