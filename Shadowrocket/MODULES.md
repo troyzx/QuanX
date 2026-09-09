@@ -7,6 +7,7 @@
 | Blackmatrix `AdvertisingScript.sgmodule` | 开屏 + 知乎等脚本净化 | 默认推荐 | 体量小、较容易排障 |
 | fmz200 `blockAds.srmodule` | 国产 App 综合去广告 | 强力备选 | 规则很多，误杀概率更高 |
 | fmz200 `weibo.srmodule` | 微博专项 | 按需 | 只在常用微博且通用模块效果不够时启用 |
+| 本仓库 `CaiYunAds.sgmodule` | 彩云天气广告/活动推广净化 | 按需 | 仅去广告，不修改会员/VIP权限 |
 | Blackmatrix Full `Advertising.list` | 超大域名广告集 | 不默认 | 比 AdvertisingLite 更重，手机常驻未必划算 |
 
 ## 推荐组合
@@ -26,6 +27,33 @@
 
 不要一开始同时启用 `AdvertisingScript` + `blockAds` + 多个同类全家桶。重叠脚本越多，出现白屏、接口异常或无法登录时越难定位。
 
+### C. 彩云天气专项
+
+本仓库已经提供 Shadowrocket 专用模块：
+
+```text
+https://raw.githubusercontent.com/troyzx/QuanX/master/Shadowrocket/Modules/CaiYunAds.sgmodule
+```
+
+对应脚本：
+
+```text
+https://raw.githubusercontent.com/troyzx/QuanX/master/Shadowrocket/Scripts/caiyun_ads.js
+```
+
+功能范围：
+
+- 图层/活动推广净化
+- 首页顶部推广净化
+- 消息中心/SVIP提醒推广净化
+- 雨季弹窗与页面动作净化
+- 发现页 feeds / banners / features / campaigns 净化
+- `ad.cyapi.cn` 通用广告请求拦截
+
+说明：该适配基于 @ddgksf2013 墨鱼版 V1.0.8 的去广告逻辑，仅迁移广告与推广内容净化，不包含会员/VIP权限修改。
+
+使用时需要在 Shadowrocket 当前配置中开启 HTTPS 解密并安装、信任 CA 证书；模块自身使用 `%APPEND%` 添加需要解密的域名，不会覆盖其他模块的 MITM hostname。
+
 ## URL
 
 ```text
@@ -37,6 +65,9 @@ https://raw.githubusercontent.com/fmz200/wool_scripts/main/Shadowrocket/module/b
 
 # fmz200 Weibo
 https://raw.githubusercontent.com/fmz200/wool_scripts/main/Shadowrocket/module/weibo.srmodule
+
+# CaiYun Weather ad cleanup (this repo)
+https://raw.githubusercontent.com/troyzx/QuanX/master/Shadowrocket/Modules/CaiYunAds.sgmodule
 
 # Blackmatrix full Advertising rules (replace AdvertisingLite in troy.conf if desired)
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Shadowrocket/Advertising/Advertising.list
